@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Partidos</title>
+</head>
+<body>
+    <form id="form_new">
+        <h2>Ingresar usuario nuevo:</h2>
+        <label for="usuario">Nombre del usuario</label>
+        <input type="text" name="usuario" id="user"><br>
+        <button type="submit">Ingresar usuario</button><br>
+    </form>
+    <form id="form_existente">
+        <h2>Ingresar equipo para usuario existente:</h2>
+        <label for="usuarioExistente">Nombre del usuario</label>
+        <select name="usuarioExistente" id="userExistente"></select><br>
+        <label for="equipo">Nombre del equipo</label>
+        <input type="text" name="equipo" id="equipo"><br>
+        <button>Ingresar equipo</button>
+    </form>
+    <script src="js/scriptIngresoEquipos.js"></script>
+</body>
+</html>

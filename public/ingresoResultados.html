@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Partidos</title>
+</head>
+<body>
+    <form id="ingresoResultado">
+        <h4>Equipo 1:</h4>
+        <select name="user1" id="userLocal">
+            <option value="" disabled selected>Seleccione el usuario local</option>
+        </select>
+        <select name="equipo1" id="equipoLocal">
+            <option value="" disabled selected>Seleccione el equipo local</option>
+        </select>
+        <input type="number" id="resultadoLocal" disabled>
+
+        <h4>Equipo 2:</h4>
+        <select name="user1" id="userVisitante">
+            <option value="" disabled selected>Seleccione el usuario visitante</option>
+        </select>
+        <select name="equipo1" id="equipoVisitante">
+            <option value="" disabled selected>Seleccione el equipo visitante</option>
+        </select>
+        <input type="number" id="resultadoVisitante" disabled><br><br>
+        
+        <button type="submit" id="ingresarResultado">Ingresar resultado</button>
+    </form>
+    <script src="js/scriptIngresoResultados.js"></script>
+</body>
+</html>
