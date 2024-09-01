@@ -111,6 +111,7 @@ document.addEventListener('DOMContentLoaded', function () {
     histUsuariosButton.addEventListener('click', function () {
         formUsuarios.style.display = 'block';
         formEquipos.style.display = 'none';
+        formUsuariosSubmit.disabled = true; // Inicialmente deshabilitar el botón submit
     });
 
     // Habilitar el select de usuarioDos
