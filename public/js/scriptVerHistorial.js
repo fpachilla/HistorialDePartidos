@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const usuarioDosSelectUsuarios = document.querySelector('#usuarioDosUsuarios');
     const historialResultados = document.querySelector('#historialResultados');
     const formEquiposSubmit = document.querySelector('#formEquiposSubmit');
+    const formUsuariosSubmit = document.querySelector('#formUsuariosSubmit');
 
     // Función para poblar los usuarios en los select
     async function cargarUsuarios() {
@@ -24,6 +25,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const selectUserLocal = document.getElementById('usuarioUno');
             const selectUserVisitante = document.getElementById('usuarioDos');
+            const selectUserLocalUsuarios = document.getElementById('usuarioUnoUsuarios');
+            const selectUserVisitanteUsuarios = document.getElementById('usuarioDosUsuarios');
 
             usuarios.forEach(usuario => {
                 const option = document.createElement('option');
@@ -33,6 +36,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 const optionClone = option.cloneNode(true);
                 selectUserVisitante.appendChild(optionClone);
+
+                // Crear otra opción para usuarioUnoUsuarios y usuarioDosUsuarios
+                const optionUsuarios = document.createElement('option');
+                optionUsuarios.value = usuario;
+                optionUsuarios.textContent = usuario;
+                // Agregar opción a usuarioUnoUsuarios y su clon a usuarioDosUsuarios
+                selectUserLocalUsuarios.appendChild(optionUsuarios);
+
+                const optionUsuariosClone = optionUsuarios.cloneNode(true);
+                selectUserVisitanteUsuarios.appendChild(optionUsuariosClone);
             });
         } catch (error) {
             console.error('Error:', error);
@@ -62,20 +75,27 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
 
                 // Habilitar el select de equiposUno
-                document.getElementById(selectEquipoId).disabled = false;
+                habilitarSelect(selectEquipoId);
             } catch (error) {
                 console.error('Error:', error);
             }
         }
     }
 
+    // Habilitar select
+    async function habilitarSelect(selectId) {
+        document.getElementById(selectId).disabled = false;
+    }
+
     // Cargar usuarios al cargar la página
     cargarUsuarios();
     
+    // Evento al cambiar el usuario 1 seleccionado
     document.getElementById('usuarioUno').addEventListener('change', function() {
         cargarEquipos('usuarioUno', 'equipoUno');
     });
     
+    // Evento al cambiar el usuario 2 seleccionado
     document.getElementById('usuarioDos').addEventListener('change', function() {
         cargarEquipos('usuarioDos', 'equipoDos');
     });
@@ -93,14 +113,22 @@ document.addEventListener('DOMContentLoaded', function () {
         formEquipos.style.display = 'none';
     });
 
+    // Habilitar el select de usuarioDos
     equipoUnoSelect.addEventListener('change', function () {
-        // Habilitar el select de usuarioDos
         document.getElementById('usuarioDos').disabled = false;
     });
 
+    // Habilitar botón submit solo si todos los selects tienen una opción seleccionada
     equipoDosSelect.addEventListener('change', function () {
-        // Habilitar botón submit solo si todos los selects tienen una opción seleccionada
         document.getElementById('submitEquipos').disabled = false;
+    });
+
+    usuarioUnoSelectUsuarios.addEventListener('change', function () {
+        habilitarSelect('usuarioDosUsuarios');
+    });
+
+    usuarioDosSelectUsuarios.addEventListener('change', function () {
+        document.getElementById('submitUsuarios').disabled = false;
     });
 
     // Manejo del envío de formularios
@@ -136,6 +164,18 @@ document.addEventListener('DOMContentLoaded', function () {
                 throw new Error('Error al obtener el historial de equipos');
             }
 
+        } catch (error) {
+            console.error(error);
+            historialResultados.innerHTML = `<p>Ocurrió un error al obtener los historiales.</p>`;
+        }
+    });
+
+    formUsuariosSubmit.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const user_1 = usuarioUnoSelectUsuarios.value;
+        const user_2 = usuarioDosSelectUsuarios.value;
+
+        try {
             // Obtener historial entre usuarios
             const responseUsuarios = await fetch('/api/getHistorialUsuarios', {
                 method: 'POST',
@@ -147,7 +187,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (responseUsuarios.ok) {
                 const historialUsuarios = await responseUsuarios.json();
-                historialResultados.innerHTML += `
+                historialResultados.innerHTML = `
                     <h3>Historial entre Usuarios:</h3>
                     <p>${user_1} vs ${user_2}</p>
                     <p>Ganados por ${user_1}: ${historialUsuarios.ganados_1}</p>
