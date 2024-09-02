@@ -290,14 +290,28 @@ app.post('/api/addHistEquipo', async (req, res) => {
 app.post('/api/getHistorialEquipos', async (req, res) => {
     const { user_1, equipo_1, user_2, equipo_2 } = req.body;
 
+    if (user_1 < user_2) {
+        userNormalizado_1 = user_1;
+        equipoNormalizado_1 = equipo_1;
+
+        userNormalizado_2 = user_2;
+        equipoNormalizado_2 = equipo_2;
+    } else {
+        userNormalizado_1 = user_2;
+        equipoNormalizado_1 = equipo_2;
+
+        userNormalizado_2 = user_1;
+        equipoNormalizado_2 = equipo_1;
+    }
+
     try {
         let pool = await sql.connect(config);
 
         let result = await pool.request()
-            .input('userEquipo_1', sql.VarChar, user_1)
-            .input('userEquipo_2', sql.VarChar, user_2)
-            .input('nombreEquipo_1', sql.VarChar, equipo_1)
-            .input('nombreEquipo_2', sql.VarChar, equipo_2)
+            .input('userEquipo_1', sql.VarChar, userNormalizado_1)
+            .input('userEquipo_2', sql.VarChar, userNormalizado_2)
+            .input('nombreEquipo_1', sql.VarChar, equipoNormalizado_1)
+            .input('nombreEquipo_2', sql.VarChar, equipoNormalizado_2)
             .query(`SELECT ganados_1, empatados, ganados_2 
                     FROM Cruces 
                     WHERE userEquipo_1 = @userEquipo_1 
@@ -320,16 +334,24 @@ app.post('/api/getHistorialEquipos', async (req, res) => {
 app.post('/api/getHistorialUsuarios', async (req, res) => {
     const { user_1, user_2 } = req.body;
 
+    if (user_1 < user_2) {
+        userNormalizado_1 = user_1;
+        userNormalizado_2 = user_2;
+    } else {
+        userNormalizado_1 = user_2;
+        userNormalizado_2 = user_1;
+    }
+
     try {
         let pool = await sql.connect(config);
 
         let result = await pool.request()
-            .input('user_1', sql.VarChar, user_1)
-            .input('user_2', sql.VarChar, user_2)
+            .input('userNormalizado_1', sql.VarChar, userNormalizado_1)
+            .input('userNormalizado_2', sql.VarChar, userNormalizado_2)
             .query(`SELECT ganados_1, empatados, ganados_2 
                     FROM CrucesUsuarios 
-                    WHERE user_1 = @user_1 
-                    AND user_2 = @user_2`);
+                    WHERE user_1 = @userNormalizado_1 
+                    AND user_2 = @userNormalizado_2`);
 
         if (result.recordset.length > 0) {
             res.status(200).json(result.recordset[0]);

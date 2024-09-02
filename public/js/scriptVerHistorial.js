@@ -132,13 +132,27 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('submitUsuarios').disabled = false;
     });
 
-    // Manejo del envío de formularios
+    // Manejo del envío de formulario para equipos
     formEquiposSubmit.addEventListener('submit', async function (e) {
         e.preventDefault();
-        const user_1 = usuarioUnoSelectEquipos.value;
-        const equipo_1 = equipoUnoSelect.value;
-        const user_2 = usuarioDosSelectEquipos.value;
-        const equipo_2 = equipoDosSelect.value;
+        const userPreview_1 = usuarioUnoSelectEquipos.value;
+        const equipoPreview_1 = equipoUnoSelect.value;
+        const userPreview_2 = usuarioDosSelectEquipos.value;
+        const equipoPreview_2 = equipoDosSelect.value;
+
+        if (userPreview_1 < userPreview_2) {
+            user_1 = userPreview_1;
+            equipo_1 = equipoPreview_1;
+    
+            user_2 = userPreview_2;
+            equipo_2 = equipoPreview_2;
+        } else {
+            user_1 = userPreview_2;
+            equipo_1 = equipoPreview_2;
+    
+            user_2 = userPreview_1;
+            equipo_2 = equipoPreview_1;
+        }
 
         try {
             // Obtener historial entre equipos
@@ -152,7 +166,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (responseEquipos.ok) {
                 const historialEquipos = await responseEquipos.json();
-                historialResultados.innerHTML = `
+                const resultadoHistorialEquipos = document.getElementById('resultadoHistorialEquipos');
+                resultadoHistorialEquipos.innerHTML = `
                     <h3>Historial entre Equipos:</h3>
                     <p>${equipo_1} (${user_1}) vs ${equipo_2} (${user_2})</p>
                     <p>Ganados por ${equipo_1}: ${historialEquipos.ganados_1}</p>
@@ -171,10 +186,20 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    // Manejo del envío de formulario para usuarios
     formUsuariosSubmit.addEventListener('submit', async function (e) {
+        console.log('Se llamó el evento del submit')
         e.preventDefault();
-        const user_1 = usuarioUnoSelectUsuarios.value;
-        const user_2 = usuarioDosSelectUsuarios.value;
+        const userPreview1 = usuarioUnoSelectUsuarios.value;
+        const userPreview2 = usuarioDosSelectUsuarios.value;
+
+        if (userPreview1 < userPreview2) {
+            user_1 = userPreview1;
+            user_2 = userPreview2;
+        } else {
+            user_1 = userPreview2;
+            user_2 = userPreview1;
+        }
 
         try {
             // Obtener historial entre usuarios
@@ -187,8 +212,10 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 
             if (responseUsuarios.ok) {
+                console.log('Dio todo ok, con user1: ' + user_1 + ' y user2: ' + user_2)
                 const historialUsuarios = await responseUsuarios.json();
-                historialResultados.innerHTML = `
+                const resultadoHistorialUsuarios = document.getElementById('resultadoHistorialUsuarios');
+                resultadoHistorialUsuarios.innerHTML = `
                     <h3>Historial entre Usuarios:</h3>
                     <p>${user_1} vs ${user_2}</p>
                     <p>Ganados por ${user_1}: ${historialUsuarios.ganados_1}</p>
