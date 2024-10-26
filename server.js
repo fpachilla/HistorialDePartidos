@@ -9,7 +9,7 @@ const port = 3000;
 const config = {
     user: 'user_historial',
     password: 'CopaDeCopas2016',
-    server: 'localhost',
+    server: 'historial.database.windows.net',
     database: 'historial',
     options: {
         encrypt: true,
