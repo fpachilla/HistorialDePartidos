@@ -10,7 +10,12 @@ const config = {
     user: 'user_historial',
     password: 'CopaDeCopas2016',
     server: 'historial.database.windows.net',
+    port: 1433,
     database: 'historial',
+    setTimeout: '3000',
+    authentication: {
+        type: 'default'
+    },
     options: {
         encrypt: true,
         trustServerCertificate: true
