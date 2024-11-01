@@ -53,7 +53,7 @@ app.get('/api/getUsuarios', async (req, res) => {
         res.status(200).json(usuarios);
     } catch (err) {
         console.error('SQL error', err);
-        res.status(500).send('Error al obtener los usuarios');
+        res.status(500).send('Error al obtener los usuarios al ir contra la DB');
     }
 });
 
