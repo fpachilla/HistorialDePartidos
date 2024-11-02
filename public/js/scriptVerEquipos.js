@@ -3,9 +3,9 @@
 document.addEventListener('DOMContentLoaded', async function() {
     try {
         const response = await fetch('/api/getUsuarios');
-        if (!response.ok) {
+        /*if (!response.ok) {
             throw new Error('Error al obtener los usuarios al hacer fetch');
-        }
+        }*/
         const usuarios = await response.json();
         
         const selectUser = document.getElementById('seleccionUsuario');
