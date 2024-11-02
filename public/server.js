@@ -48,7 +48,7 @@ app.post('/api/addUsuario', async (req, res) => {
 });
 
 // Ruta para obtener la lista de usuarios
-app.get('/getUsuarios', async (req, res) => {
+app.get('/api/getUsuarios', async (req, res) => {
     try {
         let pool = await sql.connect(config);
         let result = await pool.request().query('SELECT usuario FROM Usuarios');
