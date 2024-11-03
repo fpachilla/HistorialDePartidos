@@ -5,10 +5,6 @@ const sql = require('mssql');
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-});
-
 // Configuración de la conexión
 const config = {
     user: 'user_historial',
@@ -57,7 +53,7 @@ app.get('/api/getUsuarios', async (req, res) => {
         res.status(200).json(usuarios);
     } catch (err) {
         console.error('SQL error', err);
-        res.status(500).send('Error al obtener los usuarios al ir contra la DB');
+        res.status(500).send('Error al obtener los usuarios');
     }
 });
 
