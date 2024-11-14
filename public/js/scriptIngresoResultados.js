@@ -126,6 +126,15 @@ document.getElementById('ingresoResultado').addEventListener('submit', async fun
             console.error('Error response:', errorText);
             alert('Error al agregar el resultado y la fecha');
         }
+
+        // Limpiar los input
+        document.getElementById('resultadoLocal').value = '';
+        document.getElementById('resultadoVisitante').value = '';
+
+        // Limpiar los select
+        document.getElementById('equipoLocal').selectedIndex = 0;
+        document.getElementById('equipoVisitante').selectedIndex = 0;
+
     } catch (error) {
         console.error('Error:', error);
         alert('Error al agregar el resultado y la fecha');
