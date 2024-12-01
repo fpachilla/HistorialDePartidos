@@ -1,4 +1,6 @@
 // Ingresar usuario
+// DUDA FABRI: ¿Qué se puede mejorar acá? Porque en sí, no identifico qué podría hacer el front
+// para consumir del back en este caso
 
 document.getElementById('form_new').addEventListener('submit', async function(event) {
     event.preventDefault();
@@ -29,6 +31,9 @@ document.getElementById('form_new').addEventListener('submit', async function(ev
 });
 
 // Ver usuarios en el desplegable
+// DUDA FABRI: Acá quizás sí veo cosas mejorables, pero tengo mis dudas. ¿El tema del DOMContentLoaded
+// es algo que se tendría que quitar y que de alguna manera el front llame al back?
+// Por otro lado, ¿la creación de elementos también es algo que tiene que hacer el front?
 
 document.addEventListener('DOMContentLoaded', async function() {
     try {
@@ -53,6 +58,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 });
 
 // Ingresar equipos
+// Tampoco identifico bien qué se tiene que mejorar acá
 
 document.getElementById('form_existente').addEventListener('submit', async function(event) {
     event.preventDefault();
