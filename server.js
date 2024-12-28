@@ -23,7 +23,12 @@ const config = {
 };
 
 // Middleware
+// Este middleware transforma el cuerpo de las solicitudes HTTP que lleguen con contenido JSON.
+// Convierte el JSON recibido en un objeto JavaScript accesible desde req.body en los manejadores de rutas
 app.use(bodyParser.json());
+
+// Este middleware configura un servidor estático para servir archivos desde el directorio public.
+// Si tengo archivos HTML, CSS, JavaScript o imágenes en public, se pueden acceder directamente desde el navegador
 app.use(express.static('public'));
 
 app.listen(port, () => {
