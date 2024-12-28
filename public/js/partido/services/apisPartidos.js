@@ -252,3 +252,24 @@ app.post('/api/getCrucesPorUsuarios', async (req, res) => {
         res.status(500).send('Error al obtener el historial de cruces entre los usuarios.');
     }
 });
+
+app.post('/api/ordenarEquipos', async (req, res) => {
+    
+    if (usuarioLocal < usuarioVisitante) {
+        userEquipo_1 = usuarioLocal;
+        nombreEquipo_1 = equipoLocal;
+        resultado_1 = resultadoLocal;
+
+        userEquipo_2 = usuarioVisitante;
+        nombreEquipo_2 = equipoVisitante;
+        resultado_2 = resultadoVisitante;
+    } else {
+        userEquipo_1 = usuarioVisitante;
+        nombreEquipo_1 = equipoVisitante;
+        resultado_1 = resultadoVisitante;
+
+        userEquipo_2 = usuarioLocal;
+        nombreEquipo_2 = equipoLocal;
+        resultado_2 = resultadoLocal;
+    }
+})

@@ -85,21 +85,10 @@ document.addEventListener('DOMContentLoaded', cargarUsuarios);
 
 // Evento para manejar el envío del formulario
 document.getElementById('ingresoResultado').addEventListener('submit', async function(event) {
+
     event.preventDefault();
 
-    // Obtener los valores seleccionados y los resultados
-    const usuarioLocal = document.getElementById('userLocal').value;
-    const equipoLocal = document.getElementById('equipoLocal').value;
-    const resultadoLocal = document.getElementById('resultadoLocal').value;
-
-    const usuarioVisitante = document.getElementById('userVisitante').value;
-    const equipoVisitante = document.getElementById('equipoVisitante').value;
-    const resultadoVisitante = document.getElementById('resultadoVisitante').value;
-
-    // Generar la fecha actual ajustada a UTC-3
-    const fecha = new Date();
-    fecha.setHours(fecha.getHours() - 3); // Ajuste de UTC a UTC-3
-    const fechaUTC3 = fecha.toISOString(); // Convertir a formato ISO
+    let valores = ordenarEquipos();
 
     // Enviar los valores al servidor
     try {
@@ -109,13 +98,13 @@ document.getElementById('ingresoResultado').addEventListener('submit', async fun
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                usuarioLocal,
-                equipoLocal,
-                resultadoLocal,
-                usuarioVisitante,
-                equipoVisitante,
-                resultadoVisitante,
-                fecha: fechaUTC3
+                usuarioLocal: valores[0],
+                equipoLocal: valores[1],
+                resultadoLocal: valores[2],
+                usuarioVisitante: valores[3],
+                equipoVisitante: valores[4],
+                resultadoVisitante: valores[5],
+                fecha: obtenerFecha()
             })
         });
 
@@ -127,13 +116,7 @@ document.getElementById('ingresoResultado').addEventListener('submit', async fun
             alert('Error al agregar el resultado y la fecha');
         }
 
-        // Limpiar los input
-        document.getElementById('resultadoLocal').value = '';
-        document.getElementById('resultadoVisitante').value = '';
-
-        // Limpiar los select
-        document.getElementById('equipoLocal').selectedIndex = 0;
-        document.getElementById('equipoVisitante').selectedIndex = 0;
+        limpiarInputYSelect();
 
     } catch (error) {
         console.error('Error:', error);
@@ -141,4 +124,55 @@ document.getElementById('ingresoResultado').addEventListener('submit', async fun
     }
 });
 
+function ordenarEquipos(usuarioLocal, equipoLocal, resultadoLocal, usuarioVisitante, equipoVisitante, resultadoVisitante){
+    
+    // Obtener los valores seleccionados y los resultados
+    const usuarioLocal = document.getElementById('userLocal').value;
+    const equipoLocal = document.getElementById('equipoLocal').value;
+    const resultadoLocal = document.getElementById('resultadoLocal').value;
 
+    const usuarioVisitante = document.getElementById('userVisitante').value;
+    const equipoVisitante = document.getElementById('equipoVisitante').value;
+    const resultadoVisitante = document.getElementById('resultadoVisitante').value;
+    
+    if (usuarioLocal < usuarioVisitante) {
+        userEquipo_1 = usuarioLocal;
+        nombreEquipo_1 = equipoLocal;
+        resultado_1 = resultadoLocal;
+
+        userEquipo_2 = usuarioVisitante;
+        nombreEquipo_2 = equipoVisitante;
+        resultado_2 = resultadoVisitante;
+    } else {
+        userEquipo_1 = usuarioVisitante;
+        nombreEquipo_1 = equipoVisitante;
+        resultado_1 = resultadoVisitante;
+
+        userEquipo_2 = usuarioLocal;
+        nombreEquipo_2 = equipoLocal;
+        resultado_2 = resultadoLocal;
+    }
+
+    let listadoValores = [userEquipo_1, nombreEquipo_1, resultado_1, userEquipo_2, nombreEquipo_2, resultado_2];
+    return listadoValores;
+};
+
+function limpiarInputYSelect(){
+
+    // Limpiar los input
+    document.getElementById('resultadoLocal').value = '';
+    document.getElementById('resultadoVisitante').value = '';
+
+    // Limpiar los select
+    document.getElementById('equipoLocal').selectedIndex = 0;
+    document.getElementById('equipoVisitante').selectedIndex = 0;
+
+};
+
+function obtenerFecha(){
+    // Generar la fecha actual ajustada a UTC-3
+    const fecha = new Date();
+    fecha.setHours(fecha.getHours() - 3); // Ajuste de UTC a UTC-3
+    const fechaUTC3 = fecha.toISOString(); // Convertir a formato ISO
+    return fechaUTC3;
+}
