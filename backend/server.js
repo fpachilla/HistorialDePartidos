@@ -3,13 +3,13 @@ const bodyParser = require('body-parser');
 const sql = require('mssql');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
 // Configuración de la conexión
 const config = {
     user: 'user_historial',
     password: 'CopaDeCopas2016',
-    server: 'historial.database.windows.net',
+    server: 'localhost',
     port: 1433,
     database: 'historial',
     setTimeout: '3000',

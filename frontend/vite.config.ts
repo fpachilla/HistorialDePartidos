@@ -9,7 +9,14 @@ export default defineConfig({
   plugins: [
     vue(),
     vueJsx(),
-  ],
+  ], server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3001', // Dirección del servidor Express
+        changeOrigin: true,
+      },
+    },
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))

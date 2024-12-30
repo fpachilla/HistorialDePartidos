@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.0.0",
   "private": true,
-  "type": "module",
+
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
@@ -11,6 +11,9 @@
     "type-check": "vue-tsc --build --force"
   },
   "dependencies": {
+    "body-parser": "^1.20.3",
+    "express": "^4.21.2",
+    "mssql": "^11.0.1",
     "vue": "^3.5.12",
     "vue-router": "^4.4.5"
   },
