@@ -1,4 +1,6 @@
 <template>
+
+<div></div>
     <h2>Crear usuario nuevo</h2>
     <form @submit="formularioIngresoUsuario">
         <label for="usuarioNuevo">Nombre del usuario</label>
@@ -41,18 +43,23 @@
                 console.log("usuarioNuevo: ", this.usuarioNuevo)
             },
         },
-        mounted(){
+        mounted() {
             fetch('/api/getUsuarios')
-            .then(response => response.json()) // Lee el cuerpo una vez
-            .then(data => {
-                console.log("Respuesta", data);
-                this.usuariosExistentes = data;
-                console.log("Usuarios existentes", this.usuariosExistentes) // Usa los datos aquí
-            })
-            .catch(error => {
-                console.error('Error:', error);
-  });
-        },
+                .then(response => {
+                    if (response.ok) {
+                        return response.json(); // Retorna una promesa
+                    } else {
+                        throw new Error('Error en la respuesta de la API');
+                    }
+                })
+                .then(data => {
+                    this.usuariosExistentes = data;     
+                    console.log("Usuarios existentes", this.usuariosExistentes);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }, 
         /*created(){
             try {
                 const response =  fetch('/api/addUsuario', {

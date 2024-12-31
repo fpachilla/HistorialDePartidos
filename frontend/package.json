@@ -2,7 +2,6 @@
   "name": "frontend",
   "version": "0.0.0",
   "private": true,
-
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
@@ -15,7 +14,8 @@
     "express": "^4.21.2",
     "mssql": "^11.0.1",
     "vue": "^3.5.12",
-    "vue-router": "^4.4.5"
+    "vue-router": "^4.4.5",
+    "vuetify": "^3.7.6"
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",
